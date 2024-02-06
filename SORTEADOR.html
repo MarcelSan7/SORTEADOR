@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <!-- Definição do conjunto de caracteres e escala para dispositivos móveis -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título da página -->
+    <title>SORTEIO</title>
+    <!-- Estilos CSS para melhorar a aparência da página -->
+    <style>
+        /* Estilos para o corpo da página */
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 20px auto;
+            /* Centralizar na horizontal */
+            max-width: 600px;
+            /* Limitar a largura do conteúdo */
+            background-color: #030303;
+            /* Fundo levemente acinzentado */
+            color: #333;
+            /* Texto escuro */
+            padding-top: 50px;
+            /* Espaço na parte superior */
+        }
+
+        /* Estilos para o título principal */
+        h1 {
+            color: #ff7300;
+            /* Laranja */
+            font-size: 2em;
+            /* Tamanho maior para o título */
+            margin-bottom: 20px;
+            /* Espaço extra abaixo do título */
+        }
+
+        /* Estilos para a imagem de destaque */
+        img {
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 20px;
+            /* Espaço abaixo da imagem */
+            border-radius: 8px;
+            /* Borda arredondada */
+        }
+
+        /* Estilos para o formulário */
+        form {
+            margin-bottom: 20px;
+        }
+
+        /* Estilos para rótulos de formulário */
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ff8c00;
+            /* Laranja */
+            font-size: 1.2em;
+            /* Tamanho da fonte aumentado */
+        }
+
+        /* Estilos para campos de entrada de texto */
+        input {
+            padding: 10px;
+            margin-bottom: 12px;
+            width: calc(70% - 12px);
+            /* Preencher 70% da largura disponível e considerar o padding */
+            box-sizing: border-box;
+            /* Incluir padding na largura total */
+            border: 1px solid #ddd;
+            /* Adicionar uma borda suave */
+            border-radius: 4px;
+            /* Borda arredondada */
+            outline: none;
+            /* Remover contorno padrão no foco */
+        }
+
+        /* Estilos para o botão "Participar" */
+        button.participar {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #ff7300;
+            /* Laranja */
+            color: #fff;
+            /* Texto branco */
+            border: none;
+            font-size: 1.2em;
+            /* Tamanho da fonte aumentado */
+            border-radius: 4px;
+            /* Borda arredondada */
+            width: calc(30% - 12px);
+            /* Preencher 30% da largura disponível e considerar o padding */
+            box-sizing: border-box;
+            /* Incluir padding na largura total */
+        }
+
+        /* Estilos para os botões "Realizar Sorteio" e "Mostrar Concorrentes" */
+        button.realizar,
+        button.mostrar {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #ff7300;
+            /* Laranja */
+            color: #fff;
+            /* Texto branco */
+            border: none;
+            font-size: 1.2em;
+            /* Tamanho da fonte aumentado */
+            border-radius: 4px;
+            /* Borda arredondada */
+            width: 48%;
+            /* Largura de 48% para ambos os botões */
+        }
+
+        /* Estilos para o hover dos botões */
+        button:hover {
+            background-color: #ffad5a;
+            /* Laranja mais claro no hover */
+        }
+
+        /* Estilos para os botões "Carregar Lista", "Salvar Lista" e "Carregar Lista Localmente" */
+        button.carregar,
+        button.salvar,
+        button.carregar-local {
+            padding: 10px;
+            /* Aumenta o padding para tornar os botões um pouco maiores */
+            cursor: pointer;
+            display: inline-block;
+            background-color: #fff;
+            /* Cor branca */
+            color: #8B4513;
+            /* Texto marrom */
+            border: 1px solid #8B4513;
+            /* Borda marrom */
+            font-size: 1.0em;
+            /* Tamanho da fonte aumentado */
+            border-radius: 4px;
+            /* Borda arredondada */
+            width: calc(32% - 10px);
+            /* 32% para acomodar três botões lado a lado com um pequeno espaço entre eles */
+            margin-top: 15px;
+            /* Adiciona espaço acima dos botões */
+            margin-bottom: 8px;
+            /* Adiciona espaço abaixo dos botões */
+        }
+
+        /* Estilos para o hover dos novos botões */
+        button.carregar:hover,
+        button.salvar:hover,
+        button.carregar-local:hover {
+            background-color: #8B4513;
+            /* Marrom no hover */
+            color: #fff;
+            /* Texto branco no hover */
+        }
+
+
+        /* Estilos para o modal (janela modal para exibir o resultado do sorteio) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Estilos para o conteúdo dentro do modal */
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        /* Estilos para o botão de fechar o modal */
+        .close {
+            cursor: pointer;
+            font-size: 1.2em;
+            color: #ff8c00;
+            float: right;
+        }
+
+        /* Estilos para a tabela de concorrentes com rolagem */
+        .scrollable-table {
+            max-height: 200px;
+            /* Altura máxima da tabela */
+            overflow-y: auto;
+            /* Adiciona uma barra de rolagem vertical quando necessário */
+        }
+
+        /* Estilos para as células da tabela com bordas adicionais */
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            white-space: nowrap;
+            /* Impede que o texto quebre em várias linhas */
+        }
+
+        /* Estilos para a tabela com largura 100% */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        /* Estilos para o botão de recarregar lista */
+        button.recarregar {
+            background-color: #ff8c00;
+            /* Cor do botão de participar */
+            border: none;
+            color: #fff;
+            /* Texto branco */
+            cursor: pointer;
+            font-size: 1.5em;
+            /* Tamanho maior para o símbolo */
+            position: fixed;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <body>
+
+
+
+
+    </body>
+
+    <!-- Imagem de destaque: Utilizada para tornar a página mais atraente visualmente -->
+    <img src="https://static.wixstatic.com/media/36c9c9_a054b0c1b85a49db88ff83c1a65c7ecd~mv2.png/v1/fill/w_140,h_198,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Logotipo%20Grupo%20Calpar%202.png"
+        alt="Imagem de D estaque">
+
+    <!-- Inclua a biblioteca xlsx para manipulação de arquivos Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
+    <!-- Título principal: Informa aos usuários o propósito da página -->
+    <h1>SORTEADOR</h1>
+
+    <!-- Elemento para exibir mensagens de erro -->
+    <p id="mensagem-erro" style="color: red;"></p>
+
+    <!-- Formulário para participar do sorteio -->
+    <form id="formSorteio" onsubmit="return false;">
+        <!-- Rótulo para o campo de nome: Orienta os usuários sobre o que inserir no campo -->
+        <label for="nome">Nome:</label>
+        <!-- Campo de entrada de texto para o nome: Usado para coletar o nome do participante -->
+        <input type="text" id="nome" required onkeydown="if(event.key === 'Enter') participarSorteio()">
+        <!-- Botão para participar do sorteio: Inicia a função para cadastrar o participante -->
+        <button type="button" class="participar" onclick="participarSorteio()">Participar</button>
+    </form>
+
+
+    <!-- Botão para realizar o sorteio: Inicia a função para realizar o sorteio -->
+    <button type="button" class="realizar" onclick="realizarSorteio()">Realizar Sorteio</button>
+
+    <!-- Botão para mostrar a lista de concorrentes cadastrados -->
+    <button type="button" class="mostrar" onclick="mostrarConcorrentes()">Mostrar Concorrentes</button>
+
+    <!-- Botão para carregar uma lista de concorrentes do dispositivo -->
+    <button type="button" class="carregar" onclick="carregarListaLocalmente()">Carregar Lista</button>
+
+
+    <!-- Botão para salvar a lista de concorrentes -->
+    <button type="button" class="salvar" onclick="salvarListaLocalmente()">Salvar Lista</button>
+
+    <!-- Botão para carregar a lista de concorrentes -->
+    <button type="button" class=" carregar-local" onclick="carregarListaDoDispositivo()">Carregar Lista Local</button>
+
+    <!-- Botão discreto para recuperar a lista original -->
+    <button type="button" class="recarregar" onclick="recuperarListaOriginal()">&#x21bb;</button>
+
+
+
+
+    <!-- Modal para exibir o resultado do sorteio -->
+    <div id="modalResultado" class="modal">
+        <!-- Conteúdo do modal -->
+        <div class="modal-content">
+            <!-- Botão de fechar o modal -->
+            <span class="close" onclick="fecharModal()">&times;</span>
+            <!-- Título do modal -->
+            <h2>Resultado do Sorteio</h2>
+            <!-- Parágrafo para exibir o resultado -->
+            <p id="resultado"></p>
+        </div>
+    </div>
+
+    <!-- Modal para exibir a lista de concorrentes -->
+    <div id="modalConcorrentes" class="modal">
+        <!-- Conteúdo do modal -->
+        <div class="modal-content">
+            <!-- Botão de fechar o modal -->
+            <span class="close" onclick="fecharModalConcorrentes()">&times;</span>
+            <!-- Título do modal -->
+            <h2>Concorrentes Cadastrados</h2>
+            <!-- Tabela para exibir a lista de concorrentes com rolagem -->
+            <div class="scrollable-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaConcorrentes">
+                        <!-- Conteúdo da tabela preenchido dinamicamente com JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script JavaScript para a lógica do sorteio -->
+    <script>
+        var listaOriginal = [];
+
+        // Array para armazenar os participantes do sorteio
+        var participantes = [];
+
+        // Função para cadastrar participantes no sorteio
+        function participarSorteio() {
+            var nome = document.getElementById('nome').value;
+
+            // Verifica se o nome é válido (não vazio)
+            if (nome.trim() !== '') {
+                // Verifica se o nome já foi cadastrado
+                if (!participantes.includes(nome)) {
+                    // Adiciona o nome ao array de participantes
+                    participantes.push(nome);
+                    // Exibe uma mensagem de sucesso ao usuário
+                    document.getElementById('mensagem-erro').textContent = '';
+                    alert('Você foi adicionado ao sorteio, boa sorte!');
+                    // Limpa o campo de entrada de texto
+                    document.getElementById('nome').value = '';
+                } else {
+                    // Exibe uma mensagem de erro se o nome já foi cadastrado
+                    document.getElementById('mensagem-erro').textContent = 'Esse nome já foi cadastrado. Por favor, insira um nome diferente.';
+                    return false; // Impede o envio automático do formulário
+                }
+            } else {
+                // Exibe uma mensagem de erro se o nome for vazio
+                document.getElementById('mensagem-erro').textContent = 'Por favor, insira um nome válido.';
+                return false; // Impede o envio automático do formulário
+            }
+        }
+
+
+
+        // Função para realizar o sorteio e exibir o resultado
+        // Função para realizar o sorteio e exibir o resultado
+        // Função para realizar o primeiro sorteio e exibir o resultado
+        function realizarSorteio() {
+            // Verifica se há participantes suficientes para realizar o sorteio
+            if (participantes.length > 0) {
+                // Salva a lista original antes do primeiro sorteio
+                listaOriginal = participantes.slice();
+
+                // Gera um índice aleatório para selecionar um vencedor
+                var indiceVencedor = Math.floor(Math.random() * participantes.length);
+                // Obtém o nome do vencedor com base no índice gerado
+                var vencedor = participantes[indiceVencedor];
+
+                // Remove o nome do vencedor da lista
+                participantes.splice(indiceVencedor, 1);
+
+                // Chama a função para exibir o resultado no modal
+                exibirResultado(vencedor);
+            } else {
+                // Exibe uma mensagem de erro se não houver participantes suficientes
+                alert('Não há participantes suficientes para realizar o sorteio.');
+            }
+        }
+
+
+        // Função para exibir o resultado do sorteio no modal
+        function exibirResultado(vencedor) {
+            // Define o conteúdo do parágrafo no modal com o nome do vencedor
+            document.getElementById('resultado').innerHTML = 'O vencedor é: ' + vencedor;
+            // Exibe o modal definindo o estilo de exibição como 'flex'
+            document.getElementById('modalResultado').style.display = 'flex';
+        }
+
+        // Função para fechar o modal de resultado
+        function fecharModal() {
+            // Define o estilo de exibição do modal como 'none' para escondê-lo
+            document.getElementById('modalResultado').style.display = 'none';
+        }
+
+        // Função para mostrar a lista de concorrentes cadastrados
+        function mostrarConcorrentes() {
+            // Preenche dinamicamente a tabela de concorrentes
+            var tabelaConcorrentes = document.getElementById('tabelaConcorrentes');
+            tabelaConcorrentes.innerHTML = ''; // Limpa o conteúdo atual da tabela
+
+            // Adiciona cada concorrente à tabela
+            for (var i = 0; i < participantes.length; i++) {
+                var row = tabelaConcorrentes.insertRow(i);
+                var cell = row.insertCell(0);
+                cell.innerHTML = participantes[i];
+            }
+
+            // Exibe o modal de concorrentes definindo o estilo de exibição como 'flex'
+            document.getElementById('modalConcorrentes').style.display = 'flex';
+        }
+
+        // Função para fechar o modal de concorrentes
+        function fecharModalConcorrentes() {
+            // Define o estilo de exibição do modal como 'none' para escondê-lo
+            document.getElementById('modalConcorrentes').style.display = 'none';
+        }
+        // ... (código existente)
+
+        // Função para atualizar a lista de concorrentes na tabela
+        function atualizarListaConcorrentes() {
+            // Preenche dinamicamente a tabela de concorrentes
+            var tabelaConcorrentes = document.getElementById('tabelaConcorrentes');
+            tabelaConcorrentes.innerHTML = ''; // Limpa o conteúdo atual da tabela
+
+            // Adiciona cada concorrente à tabela
+            for (var i = 0; i < participantes.length; i++) {
+                var row = tabelaConcorrentes.insertRow(i);
+                var cell = row.insertCell(0);
+                cell.innerHTML = participantes[i];
+            }
+        }
+
+        // Função para salvar a lista de concorrentes localmente
+        function salvarListaLocalmente() {
+            var nomeLista = prompt('Digite um nome para a lista:');
+
+            if (!nomeLista) {
+                alert('Nome da lista inválido.');
+                return;
+            }
+
+            // Converte a lista de concorrentes para uma string JSON
+            var listaString = JSON.stringify(participantes);
+
+            // Salva a string JSON no armazenamento local do navegador
+            localStorage.setItem('listaConcorrentes_' + nomeLista, listaString);
+
+            // Exibe uma mensagem indicando que a lista foi salva
+            alert('Lista de concorrentes salva localmente com o nome: ' + nomeLista);
+        }
+        // Função para carregar a lista de concorrentes salva localmente
+        function carregarListaLocalmente() {
+            // Obtém todas as chaves do armazenamento local
+            var todasAsChaves = Object.keys(localStorage);
+
+            // Filtra as chaves que começam com 'listaConcorrentes_'
+            var chavesListas = todasAsChaves.filter(function (chave) {
+                return chave.startsWith('listaConcorrentes_');
+            });
+
+            // Verifica se há listas salvas
+            if (chavesListas.length === 0) {
+                alert('Nenhuma lista de concorrentes salva localmente.');
+                return;
+            }
+
+            // Pergunta ao usuário qual lista carregar
+            var escolhaLista = prompt('Escolha uma lista para carregar:\n' + chavesListas.join('\n'));
+
+            // Verifica se a escolha é válida
+            if (!escolhaLista || !localStorage.getItem(escolhaLista)) {
+                alert('Escolha inválida.');
+                return;
+            }
+
+            // Obtém a string JSON armazenada localmente
+            var listaString = localStorage.getItem(escolhaLista);
+
+            // Converte a string JSON de volta para um array
+            participantes = JSON.parse(listaString);
+
+            // Atualiza a lista de concorrentes na tabela
+            atualizarListaConcorrentes();
+
+            // Exibe uma mensagem indicando que a lista foi carregada
+            alert('Lista de concorrentes carregada localmente: ' + escolhaLista);
+        }
+
+        // Função para carregar uma lista de concorrentes do dispositivo (Excel)
+        function carregarListaDoDispositivo() {
+            // Solicita ao usuário para selecionar um arquivo local
+            var input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.xlsx, .xls';
+
+            // Adiciona um ouvinte de eventos para quando o arquivo é selecionado
+            input.addEventListener('change', function (e) {
+                var file = e.target.files[0];
+                var reader = new FileReader();
+
+                // Define a função a ser executada após a leitura do arquivo
+                reader.onload = function (e) {
+                    var data = new Uint8Array(e.target.result);
+
+                    // Converte o conteúdo do Excel em um objeto de planilha
+                    var workbook = XLSX.read(data, { type: 'array' });
+
+                    // Obtém a primeira planilha do Excel
+                    var sheetName = workbook.SheetNames[0];
+                    var sheet = workbook.Sheets[sheetName];
+
+                    // Obtém as células da coluna A, começando da linha 2
+                    var rowIndex = 2;
+                    var cellValue;
+
+                    while (true) {
+                        // Obtém o valor da célula na coluna A e na linha especificada
+                        var cellAddress = 'A' + rowIndex;
+                        cellValue = sheet[cellAddress] ? sheet[cellAddress].v : undefined;
+
+                        // Se a célula estiver vazia, interrompe o loop
+                        if (!cellValue) {
+                            break;
+                        }
+
+                        // Adiciona o valor ao array de participantes
+                        participantes.push(cellValue.trim());
+
+                        // Incrementa o índice da linha
+                        rowIndex++;
+                    }
+
+                    // Exibe uma mensagem de sucesso ao usuário
+                    alert('Lista de nomes do Excel (a partir da coluna A, linha 2) adicionada ao sorteio, boa sorte!');
+                    // Atualiza a lista de concorrentes na tabela
+                    atualizarListaConcorrentes();
+                };
+
+                // Lê o conteúdo do arquivo como um ArrayBuffer
+                reader.readAsArrayBuffer(file);
+            });
+
+            // Simula o clique no botão de seleção de arquivo
+            input.click();
+        }
+
+
+        // Função para carregar uma lista de concorrentes de um arquivo CSV
+        function carregarListaCSV() {
+            var inputCSV = document.getElementById('inputCSV');
+            if (inputCSV.files.length > 0) {
+                var file = inputCSV.files[0];
+                var reader = new FileReader();
+
+                // Define a função a ser executada após a leitura do arquivo
+                reader.onload = function (e) {
+                    // Obtém o conteúdo do arquivo (assumindo que é um CSV)
+                    var csvContent = e.target.result;
+
+                    // Converte o conteúdo do CSV em um array de linhas
+                    var linhas = csvContent.split('\n');
+
+                    // Processa cada linha a partir da segunda linha (índice 1)
+                    for (var i = 1; i < linhas.length; i++) {
+                        // Obtém os valores da coluna A (índice 0) a partir da linha 2 (índice 1)
+                        var valores = linhas[i].split(',')[0]; // Assume que as colunas estão separadas por vírgula
+
+                        // Adiciona os valores ao array de participantes, removendo espaços em branco
+                        participantes.push(valores.trim());
+                    }
+
+                    // Exibe uma mensagem de sucesso ao usuário
+                    alert('Lista de nomes do arquivo CSV (a partir da coluna A, linha 2) adicionada ao sorteio, boa sorte!');
+                    // Limpa o campo de entrada de arquivo
+                    inputCSV.value = '';
+                    // Atualiza a lista de concorrentes na tabela
+                    atualizarListaConcorrentes();
+                };
+
+                // Lê o conteúdo do arquivo como texto
+                reader.readAsText(file);
+            } else {
+                // Exibe uma mensagem de erro se nenhum arquivo CSV for carregado
+                alert('Por favor, carregue um arquivo CSV.');
+            }
+        }
+        // Função para recuperar a lista original
+        function recuperarListaOriginal() {
+            participantes = listaOriginal.slice(); // Restaura a lista original
+            //alert('Lista original recuperada com sucesso!');
+        }
+
+
+
+        // ... (restante do código existente)
+
+    </script>
+</body>
+
+</html>
