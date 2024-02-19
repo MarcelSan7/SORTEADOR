@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SORTEIO</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Imagem de destaque: Utilizada para tornar a página mais atraente visualmente -->
+    <img src="https://static.wixstatic.com/media/36c9c9_a054b0c1b85a49db88ff83c1a65c7ecd~mv2.png/v1/fill/w_140,h_198,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Logotipo%20Grupo%20Calpar%202.png"
+        alt="Imagem de D estaque">
+
+    <!-- Inclua a biblioteca xlsx para manipulação de arquivos Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
+    <!-- Título principal: Informa aos usuários o propósito da página -->
+    <h1>SORTEADOR</h1>
+
+    <!-- Elemento para exibir mensagens de erro -->
+    <p id="mensagem-erro" style="color: rgb(255, 0, 0);"></p>
+
+    <!-- Formulário para participar do sorteio -->
+    <form id="formSorteio" onsubmit="return false;">
+        <!-- Rótulo para o campo de nome: Orienta os usuários sobre o que inserir no campo -->
+        <label for="nome">Nome:</label>
+        <!-- Campo de entrada de texto para o nome: Usado para coletar o nome do participante -->
+        <input type="text" id="nome" required onkeydown="if(event.key === 'Enter') participarSorteio()">
+        <!-- Botão para participar do sorteio: Inicia a função para cadastrar o participante -->
+        <button type="button" class="participar" onclick="participarSorteio()">Participar</button>
+    </form>
+
+
+    <!-- Botão para realizar o sorteio: Inicia a função para realizar o sorteio -->
+    <button type="button" class="realizar" onclick="realizarSorteio()">Realizar Sorteio</button>
+
+    <!-- Botão para mostrar a lista de concorrentes cadastrados -->
+    <button type="button" class="mostrar" onclick="mostrarConcorrentes()">Mostrar Concorrentes</button>
+
+    <!-- Botão para carregar uma lista de concorrentes do dispositivo -->
+    <button type="button" class="carregar" onclick="carregarListaLocalmente()">Carregar Lista</button>
+
+
+    <!-- Botão para salvar a lista de concorrentes -->
+    <button type="button" class="salvar" onclick="salvarListaLocalmente()">Salvar Lista</button>
+
+    <!-- Botão para carregar a lista de concorrentes -->
+    <button type="button" class=" carregar-local" onclick="carregarListaDoDispositivo()">Carregar Lista Local</button>
+
+    <!-- Botão discreto para recuperar a lista original -->
+    <button type="button" class="recarregar" onclick="recuperarListaOriginal()">&#x21bb;</button>
+
+
+
+
+    <!-- Modal para exibir o resultado do sorteio -->
+    <div id="modalResultado" class="modal">
+        <!-- Conteúdo do modal -->
+        <div class="modal-content">
+            <!-- Botão de fechar o modal -->
+            <span class="close" onclick="fecharModal()">&times;</span>
+            <!-- Título do modal -->
+            <h2>Resultado do Sorteio</h2>
+            <!-- Parágrafo para exibir o resultado -->
+            <p id="resultado"></p>
+        </div>
+    </div>
+
+    <!-- Modal para exibir a lista de concorrentes -->
+    <div id="modalConcorrentes" class="modal">
+        <!-- Conteúdo do modal -->
+        <div class="modal-content">
+            <!-- Botão de fechar o modal -->
+            <span class="close" onclick="fecharModalConcorrentes()">&times;</span>
+            <!-- Título do modal -->
+            <h2>Concorrentes Cadastrados</h2>
+            <!-- Tabela para exibir a lista de concorrentes com rolagem -->
+            <div class="scrollable-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaConcorrentes">
+                        <!-- Conteúdo da tabela preenchido dinamicamente com JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

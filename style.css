@@ -1,0 +1,215 @@
+    /* Estilos para o corpo da página */
+    body {
+        font-family: 'Arial', sans-serif;
+        text-align: center;
+        margin: 20px auto;
+        /* Centralizar na horizontal */
+        max-width: 600px;
+        /* Limitar a largura do conteúdo */
+        background-color: #030303;
+        /* Fundo levemente acinzentado */
+        color: #333;
+        /* Texto escuro */
+        padding-top: 50px;
+        /* Espaço na parte superior */
+    }
+
+    /* Estilos para o título principal */
+    h1 {
+        color: #ff5e00;
+        /* Laranja */
+        font-size: 2em;
+        /* Tamanho maior para o título */
+        margin-bottom: 20px;
+        /* Espaço extra abaixo do título */
+    }
+
+    /* Estilos para a imagem de destaque */
+    img {
+        width: 100%;
+        max-width: 400px;
+        margin-bottom: 20px;
+        /* Espaço abaixo da imagem */
+        border-radius: 8px;
+        /* Borda arredondada */
+    }
+
+    /* Estilos para o formulário */
+    form {
+        margin-bottom: 20px;
+    }
+
+    /* Estilos para rótulos de formulário */
+    label {
+        display: block;
+        margin-bottom: 8px;
+        color: #ff5e00;
+        /* Laranja */
+        font-size: 1.2em;
+        /* Tamanho da fonte aumentado */
+    }
+
+    /* Estilos para campos de entrada de texto */
+    input {
+        padding: 10px;
+        margin-bottom: 12px;
+        width: calc(70% - 12px);
+        /* Preencher 70% da largura disponível e considerar o padding */
+        box-sizing: border-box;
+        /* Incluir padding na largura total */
+        border: 1px solid #ddd;
+        /* Adicionar uma borda suave */
+        border-radius: 4px;
+        /* Borda arredondada */
+        outline: none;
+        /* Remover contorno padrão no foco */
+    }
+
+    /* Estilos para o botão "Participar" */
+    button.participar {
+        padding: 10px;
+        cursor: pointer;
+        background-color: #ff5e00;
+        /* Laranja */
+        color: #fff;
+        /* Texto branco */
+        border: none;
+        font-size: 1.2em;
+        /* Tamanho da fonte aumentado */
+        border-radius: 4px;
+        /* Borda arredondada */
+        width: calc(30% - 12px);
+        /* Preencher 30% da largura disponível e considerar o padding */
+        box-sizing: border-box;
+        /* Incluir padding na largura total */
+    }
+
+    /* Estilos para os botões "Realizar Sorteio" e "Mostrar Concorrentes" */
+    button.realizar,
+    button.mostrar {
+        padding: 10px;
+        cursor: pointer;
+        background-color: #ff5e00;
+        /* Laranja */
+        color: #fff;
+        /* Texto branco */
+        border: none;
+        font-size: 1.2em;
+        /* Tamanho da fonte aumentado */
+        border-radius: 4px;
+        /* Borda arredondada */
+        width: 48%;
+        /* Largura de 48% para ambos os botões */
+    }
+
+    /* Estilos para o hover dos botões */
+    button:hover {
+        background-color: #ff7300;
+        /* Laranja mais claro no hover */
+    }
+
+    /* Estilos para os botões "Carregar Lista", "Salvar Lista" e "Carregar Lista Localmente" */
+    button.carregar,
+    button.salvar,
+    button.carregar-local {
+        padding: 10px;
+        /* Aumenta o padding para tornar os botões um pouco maiores */
+        cursor: pointer;
+        display: inline-block;
+        background-color: #fff;
+        /* Cor branca */
+        color: #8B4513;
+        /* Texto marrom */
+        border: 1px solid #8B4513;
+        /* Borda marrom */
+        font-size: 1.0em;
+        /* Tamanho da fonte aumentado */
+        border-radius: 4px;
+        /* Borda arredondada */
+        width: calc(32% - 10px);
+        /* 32% para acomodar três botões lado a lado com um pequeno espaço entre eles */
+        margin-top: 15px;
+        /* Adiciona espaço acima dos botões */
+        margin-bottom: 8px;
+        /* Adiciona espaço abaixo dos botões */
+    }
+
+    /* Estilos para o hover dos novos botões */
+    button.carregar:hover,
+    button.salvar:hover,
+    button.carregar-local:hover {
+        background-color: #8B4513;
+        /* Marrom no hover */
+        color: #fff;
+        /* Texto branco no hover */
+    }
+
+
+    /* Estilos para o modal (janela modal para exibir o resultado do sorteio) */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Estilos para o conteúdo dentro do modal */
+    .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    /* Estilos para o botão de fechar o modal */
+    .close {
+        cursor: pointer;
+        font-size: 1.2em;
+        color: #ff7300;
+        float: right;
+    }
+
+    /* Estilos para a tabela de concorrentes com rolagem */
+    .scrollable-table {
+        max-height: 200px;
+        /* Altura máxima da tabela */
+        overflow-y: auto;
+        /* Adiciona uma barra de rolagem vertical quando necessário */
+    }
+
+    /* Estilos para as células da tabela com bordas adicionais */
+    th,
+    td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        white-space: nowrap;
+        /* Impede que o texto quebre em várias linhas */
+    }
+
+    /* Estilos para a tabela com largura 100% */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    /* Estilos para o botão de recarregar lista */
+    button.recarregar {
+        background-color: #ff7300;
+        /* Cor do botão de participar */
+        border: none;
+        color: #fff;
+        /* Texto branco */
+        cursor: pointer;
+        font-size: 1.5em;
+        /* Tamanho maior para o símbolo */
+        position: fixed;
+        top: 10px;
+        right: 10px;
+    }
